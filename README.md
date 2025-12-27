@@ -42,31 +42,7 @@
 
 ---
 
-## 🚀 שימוש / Usage
-
-### דרך 1: GitHub Pages (מומלץ)
-1. הפעל GitHub Pages ב-repository
-2. גש ל: `https://YOUR_USERNAME.github.io/residency-matcher/`
-
-### דרך 2: שרת מקומי
-```bash
-# פתח את index.html בדפדפן
-# או השתמש ב-local server:
-python -m http.server 8000
-# ואז גש ל: http://localhost:8000
-```
-
-### דרך 3: העלאה לשרת
-העלה את הקבצים הבאים לשרת:
-- `index.html`
-- `calculator.html`
-- `reports/analysis_report.html`
-- `reports/statistical_summary_ordered.txt`
-- `prop_img_for_app/` (כל התמונות)
-
----
-
-## 📁 מבנה הקבצים / File Structure
+# 📁 מבנה הקבצים / File Structure
 
 ```
 residency-matcher/
@@ -189,3 +165,4 @@ residency-matcher/
 ---
 
 **© 2026 מחקר בחירת התמחות ברפואה**
+
