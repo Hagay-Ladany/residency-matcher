@@ -87,35 +87,23 @@
         }
         
         /* Sliders */
-        .slider-container {
-            background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%);
-            border-radius: 12px;
-            padding: 15px;
-            border: 1px solid #e9ecef;
-            transition: all 0.2s ease;
+        /* Select Dropdowns Styling */
+        .form-select {
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            padding: 10px 15px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
         }
-        .slider-container:hover {
+        .form-select:hover {
             border-color: var(--primary);
-            box-shadow: 0 2px 10px rgba(40, 116, 166, 0.1);
+            box-shadow: 0 2px 10px rgba(40, 116, 166, 0.15);
         }
-        .slider-label {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .slider-value {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            padding: 2px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            min-width: 35px;
-            text-align: center;
+        .form-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 4px 15px rgba(40, 116, 166, 0.25);
+            outline: none;
         }
         .form-range {
             height: 10px;
@@ -125,7 +113,7 @@
         }
         .form-range::-webkit-slider-runnable-track {
             height: 10px;
-            background: linear-gradient(90deg, #e74c3c 0%, #f39c12 50%, #27ae60 100%);
+            background: linear-gradient(90deg, #27ae60 0%, #f39c12 50%, #e74c3c 100%);
             border-radius: 6px;
             box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
         }
@@ -148,7 +136,7 @@
         }
         .form-range::-moz-range-track {
             height: 10px;
-            background: linear-gradient(90deg, #e74c3c 0%, #f39c12 50%, #27ae60 100%);
+            background: linear-gradient(90deg, #27ae60 0%, #f39c12 50%, #e74c3c 100%);
             border-radius: 6px;
         }
         .form-range::-moz-range-thumb {
@@ -656,40 +644,44 @@
                 </div>
                 <div class="row g-3 mb-4">
                     <div class="col-lg-3 col-md-6 col-12">
-                        <div class="slider-container">
-                            <div class="slider-label">
-                                <span><i class="fas fa-balance-scale me-1"></i>איזון בית-עבודה</span>
-                                <span class="slider-value" id="val_balance">3</span>
-                            </div>
-                            <input type="range" class="form-range" id="pref_balance" min="1" max="5" value="3" oninput="updateSlider('balance')">
-                        </div>
+                        <label class="form-label fw-semibold"><i class="fas fa-balance-scale me-1"></i>איזון בית-עבודה:</label>
+                        <select id="pref_balance" class="form-select" onchange="updateSelect('balance')">
+                            <option value="1">לא חשוב</option>
+                            <option value="2">חשוב מעט</option>
+                            <option value="3" selected>חשוב בינוני</option>
+                            <option value="4">חשוב</option>
+                            <option value="5">חשוב מאוד</option>
+                        </select>
                     </div>
                     <div class="col-lg-3 col-md-6 col-12">
-                        <div class="slider-container">
-                            <div class="slider-label">
-                                <span><i class="fas fa-shekel-sign me-1"></i>שכר</span>
-                                <span class="slider-value" id="val_salary">3</span>
-                            </div>
-                            <input type="range" class="form-range" id="pref_salary" min="1" max="5" value="3" oninput="updateSlider('salary')">
-                        </div>
+                        <label class="form-label fw-semibold"><i class="fas fa-shekel-sign me-1"></i>שכר:</label>
+                        <select id="pref_salary" class="form-select" onchange="updateSelect('salary')">
+                            <option value="1">לא חשוב</option>
+                            <option value="2">חשוב מעט</option>
+                            <option value="3" selected>חשוב בינוני</option>
+                            <option value="4">חשוב</option>
+                            <option value="5">חשוב מאוד</option>
+                        </select>
                     </div>
                     <div class="col-lg-3 col-md-6 col-12">
-                        <div class="slider-container">
-                            <div class="slider-label">
-                                <span><i class="fas fa-microscope me-1"></i>מחקר/אקדמיה</span>
-                                <span class="slider-value" id="val_research">2</span>
-                            </div>
-                            <input type="range" class="form-range" id="pref_research" min="1" max="5" value="2" oninput="updateSlider('research')">
-                        </div>
+                        <label class="form-label fw-semibold"><i class="fas fa-microscope me-1"></i>מחקר/אקדמיה:</label>
+                        <select id="pref_research" class="form-select" onchange="updateSelect('research')">
+                            <option value="1">לא חשוב</option>
+                            <option value="2" selected>חשוב מעט</option>
+                            <option value="3">חשוב בינוני</option>
+                            <option value="4">חשוב</option>
+                            <option value="5">חשוב מאוד</option>
+                        </select>
                     </div>
                     <div class="col-lg-3 col-md-6 col-12">
-                        <div class="slider-container">
-                            <div class="slider-label">
-                                <span><i class="fas fa-heart me-1"></i>תחושת משמעות</span>
-                                <span class="slider-value" id="val_meaning">4</span>
-                            </div>
-                            <input type="range" class="form-range" id="pref_meaning" min="1" max="5" value="4" oninput="updateSlider('meaning')">
-                        </div>
+                        <label class="form-label fw-semibold"><i class="fas fa-heart me-1"></i>תחושת משמעות:</label>
+                        <select id="pref_meaning" class="form-select" onchange="updateSelect('meaning')">
+                            <option value="1">לא חשוב</option>
+                            <option value="2">חשוב מעט</option>
+                            <option value="3">חשוב בינוני</option>
+                            <option value="4" selected>חשוב</option>
+                            <option value="5">חשוב מאוד</option>
+                        </select>
                     </div>
                 </div>
                 
@@ -700,40 +692,44 @@
                 </div>
                 <div class="row g-3 mb-4">
                     <div class="col-lg-3 col-md-6 col-12">
-                        <div class="slider-container">
-                            <div class="slider-label">
-                                <span><i class="fas fa-bolt me-1"></i>מוכנות ללחץ</span>
-                                <span class="slider-value" id="val_stress">3</span>
-                            </div>
-                            <input type="range" class="form-range" id="pref_stress" min="1" max="5" value="3" oninput="updateSlider('stress')">
-                        </div>
+                        <label class="form-label fw-semibold"><i class="fas fa-bolt me-1"></i>מוכנות ללחץ:</label>
+                        <select id="pref_stress" class="form-select" onchange="updateSelect('stress')">
+                            <option value="1">לא חשוב</option>
+                            <option value="2">חשוב מעט</option>
+                            <option value="3" selected>חשוב בינוני</option>
+                            <option value="4">חשוב</option>
+                            <option value="5">חשוב מאוד</option>
+                        </select>
                     </div>
                     <div class="col-lg-3 col-md-6 col-12">
-                        <div class="slider-container">
-                            <div class="slider-label">
-                                <span><i class="fas fa-hand-paper me-1"></i>עבודה ידנית</span>
-                                <span class="slider-value" id="val_manual">3</span>
-                            </div>
-                            <input type="range" class="form-range" id="pref_manual" min="1" max="5" value="3" oninput="updateSlider('manual')">
-                        </div>
+                        <label class="form-label fw-semibold"><i class="fas fa-hand-paper me-1"></i>עבודה ידנית:</label>
+                        <select id="pref_manual" class="form-select" onchange="updateSelect('manual')">
+                            <option value="1">לא חשוב</option>
+                            <option value="2">חשוב מעט</option>
+                            <option value="3" selected>חשוב בינוני</option>
+                            <option value="4">חשוב</option>
+                            <option value="5">חשוב מאוד</option>
+                        </select>
                     </div>
                     <div class="col-lg-3 col-md-6 col-12">
-                        <div class="slider-container">
-                            <div class="slider-label">
-                                <span><i class="fas fa-user-friends me-1"></i>קשר עם מטופלים</span>
-                                <span class="slider-value" id="val_patient">3</span>
-                            </div>
-                            <input type="range" class="form-range" id="pref_patient" min="1" max="5" value="3" oninput="updateSlider('patient')">
-                        </div>
+                        <label class="form-label fw-semibold"><i class="fas fa-user-friends me-1"></i>קשר עם מטופלים:</label>
+                        <select id="pref_patient" class="form-select" onchange="updateSelect('patient')">
+                            <option value="1">לא חשוב</option>
+                            <option value="2">חשוב מעט</option>
+                            <option value="3" selected>חשוב בינוני</option>
+                            <option value="4">חשוב</option>
+                            <option value="5">חשוב מאוד</option>
+                        </select>
                     </div>
                     <div class="col-lg-3 col-md-6 col-12">
-                        <div class="slider-container">
-                            <div class="slider-label">
-                                <span><i class="fas fa-moon me-1"></i>מוכנות לתורנויות</span>
-                                <span class="slider-value" id="val_shifts">3</span>
-                            </div>
-                            <input type="range" class="form-range" id="pref_shifts" min="1" max="5" value="3" oninput="updateSlider('shifts')">
-                        </div>
+                        <label class="form-label fw-semibold"><i class="fas fa-moon me-1"></i>מוכנות לתורנויות:</label>
+                        <select id="pref_shifts" class="form-select" onchange="updateSelect('shifts')">
+                            <option value="1">לא חשוב</option>
+                            <option value="2">חשוב מעט</option>
+                            <option value="3" selected>חשוב בינוני</option>
+                            <option value="4">חשוב</option>
+                            <option value="5">חשוב מאוד</option>
+                        </select>
                     </div>
                 </div>
                 
@@ -1083,13 +1079,12 @@
     let results = [];
     
     // ==========================================
-    // SLIDER UPDATE
+    // SELECT UPDATE (replaced sliders with text options)
     // ==========================================
     
-    function updateSlider(name) {
-        const slider = document.getElementById('pref_' + name);
-        const valSpan = document.getElementById('val_' + name);
-        valSpan.textContent = slider.value;
+    function updateSelect(name) {
+        // Function kept for compatibility, but no longer needed
+        // since we're using select dropdowns instead of sliders
     }
     
     // ==========================================
@@ -1431,4 +1426,3 @@
     </script>
 </body>
 </html>
-
