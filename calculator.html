@@ -1,0 +1,1433 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🩺 בוחר התמחות - מחשבון</title>
+    
+    <!-- Bootstrap 5 RTL -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #2874a6;
+            --primary-dark: #153952;
+            --accent: #f39c12;
+            --success: #27ae60;
+            --danger: #e74c3c;
+            --gold: #ffd700;
+            --silver: #c0c0c0;
+            --bronze: #cd7f32;
+        }
+        
+        * { 
+            font-family: 'Heebo', 'Segoe UI', Tahoma, Arial, sans-serif; 
+            box-sizing: border-box;
+        }
+        
+        body { 
+            background: linear-gradient(180deg, #f0f4f8 0%, #e8eef3 100%);
+            min-height: 100vh;
+            direction: rtl;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: 25px 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+        }
+        .header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            margin: 0;
+        }
+        .header p {
+            opacity: 0.9;
+            margin: 5px 0 0;
+        }
+        
+        /* Cards */
+        .card {
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        .card:hover {
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+        .card-header {
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            border-bottom: 2px solid var(--primary);
+            padding: 15px 20px;
+        }
+        .card-header h5 {
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+        
+        /* Sliders */
+        .slider-container {
+            background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%);
+            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid #e9ecef;
+            transition: all 0.2s ease;
+        }
+        .slider-container:hover {
+            border-color: var(--primary);
+            box-shadow: 0 2px 10px rgba(40, 116, 166, 0.1);
+        }
+        .slider-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .slider-value {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            min-width: 35px;
+            text-align: center;
+        }
+        .form-range {
+            height: 10px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: transparent;
+        }
+        .form-range::-webkit-slider-runnable-track {
+            height: 10px;
+            background: linear-gradient(90deg, #e74c3c 0%, #f39c12 50%, #27ae60 100%);
+            border-radius: 6px;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+        }
+        .form-range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 28px;
+            height: 28px;
+            margin-top: -9px;
+            background: linear-gradient(145deg, #4fc3f7 0%, #2196f3 30%, #1976d2 70%, #0d47a1 100%);
+            border: 3px solid white;
+            border-radius: 50%;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.35), inset 0 1px 2px rgba(255,255,255,0.4);
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .form-range::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.4), inset 0 1px 2px rgba(255,255,255,0.4);
+        }
+        .form-range::-moz-range-track {
+            height: 10px;
+            background: linear-gradient(90deg, #e74c3c 0%, #f39c12 50%, #27ae60 100%);
+            border-radius: 6px;
+        }
+        .form-range::-moz-range-thumb {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(145deg, #4fc3f7 0%, #2196f3 30%, #1976d2 70%, #0d47a1 100%);
+            border: 3px solid white;
+            border-radius: 50%;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.35);
+            cursor: pointer;
+        }
+        
+        /* Custom Toggle Buttons */
+        .toggle-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .toggle-btn {
+            position: relative;
+        }
+        .toggle-btn input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .toggle-btn label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 2px solid #dee2e6;
+            color: #495057;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        }
+        .toggle-btn label:hover {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(40, 116, 166, 0.2);
+        }
+        .toggle-btn input[type="radio"]:checked + label {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-color: var(--primary-dark);
+            color: white;
+            box-shadow: 0 4px 15px rgba(40, 116, 166, 0.4);
+            transform: translateY(-2px);
+        }
+        .toggle-btn input[type="radio"]:checked + label i {
+            color: white;
+        }
+        .toggle-btn label i {
+            font-size: 0.85rem;
+            color: var(--primary);
+        }
+        
+        /* Section Headers */
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary-dark);
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid transparent;
+            background: linear-gradient(90deg, var(--primary) 0%, transparent 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+        .section-title i {
+            color: var(--primary);
+        }
+        
+        /* Calculate Button */
+        .btn-calculate {
+            font-size: 1.3rem;
+            padding: 15px 50px;
+            border-radius: 50px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border: none;
+            box-shadow: 0 6px 20px rgba(40, 116, 166, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-calculate::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+        .btn-calculate:hover::before {
+            left: 100%;
+        }
+        .btn-calculate:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(40, 116, 166, 0.5);
+        }
+        .btn-calculate:active {
+            transform: translateY(0);
+        }
+        
+        /* Result Cards */
+        .result-card {
+            border-radius: 24px;
+            padding: 30px 25px;
+            text-align: center;
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+        .result-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at top right, rgba(255,255,255,0.4) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .result-card:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
+        .result-card .badge {
+            font-size: 1rem;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+        .result-card h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 8px 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.08);
+        }
+        .result-card .specialty-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-top: 8px;
+        }
+        .result-card img {
+            max-height: 130px;
+            border-radius: 14px;
+            margin: 0;
+            transition: transform 0.3s ease;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.2));
+        }
+        .result-card:hover img {
+            transform: scale(1.02);
+        }
+        .result-img-frame {
+            display: inline-block;
+            margin: 12px 0;
+            transition: transform 0.3s ease;
+        }
+        .result-card:hover .result-img-frame {
+            transform: scale(1.05);
+        }
+        
+        /* Medal Colors - Updated Design with Transparency */
+        .gold {
+            background: linear-gradient(180deg, rgba(255,249,196,0.9) 0%, rgba(255,235,59,0.85) 40%, rgba(255,193,7,0.9) 100%);
+            border: none;
+            box-shadow: 0 10px 40px rgba(255, 193, 7, 0.5);
+        }
+        .gold h2 { color: #5d4037; font-size: 3.2rem; }
+        .gold .specialty-name { color: #5d4037; font-size: 1.5rem; }
+        .gold .badge { 
+            background: linear-gradient(135deg, #5d4037, #3e2723); 
+            font-size: 1.1rem;
+            padding: 10px 20px;
+        }
+        .gold .result-img-frame {
+            border-radius: 16px;
+        }
+        .gold img { max-height: 150px; }
+        
+        .silver {
+            background: linear-gradient(180deg, rgba(250,250,250,0.9) 0%, rgba(224,224,224,0.85) 40%, rgba(189,189,189,0.9) 100%);
+            border: none;
+            box-shadow: 0 8px 30px rgba(189, 189, 189, 0.5);
+        }
+        .silver h2 { color: #37474f; font-size: 2.8rem; }
+        .silver .specialty-name { color: #37474f; font-size: 1.3rem; }
+        .silver .badge { 
+            background: linear-gradient(135deg, #455a64, #263238);
+            font-size: 1rem;
+        }
+        .silver .result-img-frame {
+            border-radius: 14px;
+        }
+        .silver img { max-height: 130px; }
+        
+        .bronze {
+            background: linear-gradient(180deg, rgba(255,224,178,0.9) 0%, rgba(255,171,64,0.85) 40%, rgba(255,145,0,0.9) 100%);
+            border: none;
+            box-shadow: 0 8px 30px rgba(255, 145, 0, 0.4);
+        }
+        .bronze h2 { color: #4e342e; font-size: 2.6rem; }
+        .bronze .specialty-name { color: #4e342e; font-size: 1.2rem; }
+        .bronze .badge { 
+            background: linear-gradient(135deg, #5d4037, #3e2723);
+            font-size: 0.95rem;
+        }
+        .bronze .result-img-frame {
+            border-radius: 12px;
+        }
+        .bronze img { max-height: 120px; }
+        
+        /* Tabs */
+        .nav-tabs {
+            border: none;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+        .nav-tabs .nav-link {
+            border: none;
+            border-radius: 10px;
+            color: #666;
+            font-weight: 500;
+            padding: 10px 18px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+        .nav-tabs .nav-link:hover {
+            background: #e9ecef;
+            color: var(--primary);
+        }
+        .nav-tabs .nav-link.active {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: 0 4px 12px rgba(40, 116, 166, 0.3);
+        }
+        
+        /* Tables */
+        .table {
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .table thead th {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            font-weight: 600;
+            border: none;
+            padding: 15px;
+        }
+        .table tbody tr {
+            transition: background 0.2s ease;
+        }
+        .table tbody tr:hover {
+            background: rgba(40, 116, 166, 0.05);
+        }
+        .table tbody td {
+            padding: 12px 15px;
+            vertical-align: middle;
+        }
+        .rank-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-weight: 700;
+            color: white;
+        }
+        .rank-1 { background: linear-gradient(135deg, #ffd700, #ffcc00); color: #8b6914; }
+        .rank-2 { background: linear-gradient(135deg, #c0c0c0, #a8b0b8); color: #4a5568; }
+        .rank-3 { background: linear-gradient(135deg, #cd7f32, #b8722c); }
+        .rank-other { background: #e9ecef; color: #666; }
+        
+        /* Specialty Card */
+        .specialty-card {
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e9ecef;
+        }
+        .specialty-card h3 {
+            color: var(--primary-dark);
+            font-weight: 700;
+            padding-bottom: 12px;
+            border-bottom: 3px solid var(--primary);
+            margin-bottom: 15px;
+        }
+        .specialty-card h5 {
+            color: var(--primary);
+            font-weight: 600;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .specialty-card h5 i { font-size: 0.9rem; }
+        
+        /* Stats */
+        .stat-card {
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border-color: var(--primary);
+        }
+        .stat-card h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 0;
+        }
+        .stat-card p {
+            color: #666;
+            font-weight: 500;
+            margin: 5px 0 0;
+        }
+        
+        /* Detail Image */
+        .specialty-img-large {
+            max-width: 90%;
+            max-height: 280px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+        .specialty-img-large:hover {
+            transform: scale(1.03);
+        }
+        
+        /* Algorithm Cards */
+        .algo-card {
+            border-radius: 12px;
+            padding: 20px;
+            height: 100%;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .algo-card:hover {
+            transform: translateY(-3px);
+        }
+        .algo-card.direct {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            border-color: var(--success);
+        }
+        .algo-card.proximity {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeeba 100%);
+            border-color: var(--accent);
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-in {
+            animation: fadeInUp 0.5s ease forwards;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            #results-cards .col-lg-5 { flex: 0 0 100%; max-width: 100%; }
+            #results-cards .col-lg-3 { flex: 0 0 50%; max-width: 50%; }
+        }
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.6rem; }
+            .result-card { min-height: 200px !important; padding: 18px 15px; }
+            .result-card h2 { font-size: 2rem !important; }
+            .result-card .specialty-name { font-size: 1.1rem !important; }
+            .result-card img { max-height: 90px !important; }
+            .btn-calculate { padding: 12px 30px; font-size: 1.1rem; }
+            .nav-tabs .nav-link { padding: 8px 12px; font-size: 0.85rem; }
+            .toggle-btn label { padding: 8px 14px; font-size: 0.85rem; }
+            #results-cards .col-lg-3 { flex: 0 0 100%; max-width: 100%; }
+        }
+        
+        /* Loading State */
+        .loading {
+            position: relative;
+            pointer-events: none;
+        }
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255,255,255,0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header text-center text-white mb-4">
+        <h1><i class="fas fa-stethoscope me-2"></i>בוחר התמחות</h1>
+        <p class="mb-0">מבוסס על סקר 367 מתמחים ברפואה</p>
+    </div>
+    
+    <div class="container-fluid px-3 px-md-4" style="max-width: 1400px;">
+        
+        <!-- Questionnaire Card -->
+        <div class="card mb-4 animate-in">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-clipboard-list me-2"></i>השאלון שלי</h5>
+            </div>
+            <div class="card-body p-4">
+                <!-- Personal Details Row -->
+                <div class="section-title">
+                    <i class="fas fa-user"></i>
+                    <span>פרטים אישיים</span>
+                </div>
+                <div class="row g-3 mb-4">
+                    <div class="col-md-3 col-6">
+                        <label class="form-label fw-semibold">קבוצת גיל:</label>
+                        <select id="age_group" class="form-select">
+                            <option value="25-30">25-30</option>
+                            <option value="30-35" selected>30-35</option>
+                            <option value="35-40">35-40</option>
+                            <option value="40+">40+</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <label class="form-label fw-semibold">מגדר:</label>
+                        <div class="toggle-group mt-2">
+                            <div class="toggle-btn">
+                                <input type="radio" name="gender" id="male" value="male" checked>
+                                <label for="male"><i class="fas fa-mars"></i> זכר</label>
+                            </div>
+                            <div class="toggle-btn">
+                                <input type="radio" name="gender" id="female" value="female">
+                                <label for="female"><i class="fas fa-venus"></i> נקבה</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">תכנון הורות בהתמחות:</label>
+                        <div class="toggle-group mt-2">
+                            <div class="toggle-btn">
+                                <input type="radio" name="parenting" id="parenting_yes" value="yes">
+                                <label for="parenting_yes"><i class="fas fa-check-circle"></i> כן</label>
+                            </div>
+                            <div class="toggle-btn">
+                                <input type="radio" name="parenting" id="parenting_no" value="no">
+                                <label for="parenting_no"><i class="fas fa-times-circle"></i> לא</label>
+                            </div>
+                            <div class="toggle-btn">
+                                <input type="radio" name="parenting" id="parenting_maybe" value="maybe" checked>
+                                <label for="parenting_maybe"><i class="fas fa-question-circle"></i> אולי</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Work Preferences -->
+                <div class="section-title">
+                    <i class="fas fa-briefcase"></i>
+                    <span>העדפות עבודה</span>
+                </div>
+                <div class="row g-3 mb-4">
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <span><i class="fas fa-balance-scale me-1"></i>איזון בית-עבודה</span>
+                                <span class="slider-value" id="val_balance">3</span>
+                            </div>
+                            <input type="range" class="form-range" id="pref_balance" min="1" max="5" value="3" oninput="updateSlider('balance')">
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <span><i class="fas fa-shekel-sign me-1"></i>שכר</span>
+                                <span class="slider-value" id="val_salary">3</span>
+                            </div>
+                            <input type="range" class="form-range" id="pref_salary" min="1" max="5" value="3" oninput="updateSlider('salary')">
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <span><i class="fas fa-microscope me-1"></i>מחקר/אקדמיה</span>
+                                <span class="slider-value" id="val_research">2</span>
+                            </div>
+                            <input type="range" class="form-range" id="pref_research" min="1" max="5" value="2" oninput="updateSlider('research')">
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <span><i class="fas fa-heart me-1"></i>תחושת משמעות</span>
+                                <span class="slider-value" id="val_meaning">4</span>
+                            </div>
+                            <input type="range" class="form-range" id="pref_meaning" min="1" max="5" value="4" oninput="updateSlider('meaning')">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Work Style -->
+                <div class="section-title">
+                    <i class="fas fa-cogs"></i>
+                    <span>סגנון עבודה</span>
+                </div>
+                <div class="row g-3 mb-4">
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <span><i class="fas fa-bolt me-1"></i>מוכנות ללחץ</span>
+                                <span class="slider-value" id="val_stress">3</span>
+                            </div>
+                            <input type="range" class="form-range" id="pref_stress" min="1" max="5" value="3" oninput="updateSlider('stress')">
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <span><i class="fas fa-hand-paper me-1"></i>עבודה ידנית</span>
+                                <span class="slider-value" id="val_manual">3</span>
+                            </div>
+                            <input type="range" class="form-range" id="pref_manual" min="1" max="5" value="3" oninput="updateSlider('manual')">
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <span><i class="fas fa-user-friends me-1"></i>קשר עם מטופלים</span>
+                                <span class="slider-value" id="val_patient">3</span>
+                            </div>
+                            <input type="range" class="form-range" id="pref_patient" min="1" max="5" value="3" oninput="updateSlider('patient')">
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <span><i class="fas fa-moon me-1"></i>מוכנות לתורנויות</span>
+                                <span class="slider-value" id="val_shifts">3</span>
+                            </div>
+                            <input type="range" class="form-range" id="pref_shifts" min="1" max="5" value="3" oninput="updateSlider('shifts')">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Calculate Button -->
+                <div class="text-center mt-4">
+                    <button class="btn btn-primary btn-lg btn-calculate" onclick="calculate()">
+                        <i class="fas fa-search me-2"></i>חשב התאמה
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Results Cards - RTL Order: Gold (right) | Silver (middle) | Bronze (left) -->
+        <div class="row g-3 mb-4 justify-content-center" id="results-cards">
+            <!-- Gold - First Place (larger) -->
+            <div class="col-lg-5 col-md-6">
+                <div class="card result-card gold" style="min-height: 320px;">
+                    <span class="badge text-white">🥇 מקום ראשון</span>
+                    <div class="result-img-frame" id="frame1" style="display:none;">
+                        <img id="img1" src="" alt="">
+                    </div>
+                    <h2 id="score1">?</h2>
+                    <div class="specialty-name" id="name1">לחץ על "חשב התאמה"</div>
+                </div>
+            </div>
+            <!-- Silver - Second Place -->
+            <div class="col-lg-3 col-md-6">
+                <div class="card result-card silver" style="min-height: 280px;">
+                    <span class="badge text-white">🥈 מקום שני</span>
+                    <div class="result-img-frame" id="frame2" style="display:none;">
+                        <img id="img2" src="" alt="">
+                    </div>
+                    <h2 id="score2">?</h2>
+                    <div class="specialty-name" id="name2">-</div>
+                </div>
+            </div>
+            <!-- Bronze - Third Place -->
+            <div class="col-lg-3 col-md-6">
+                <div class="card result-card bronze" style="min-height: 260px;">
+                    <span class="badge text-white">🥉 מקום שלישי</span>
+                    <div class="result-img-frame" id="frame3" style="display:none;">
+                        <img id="img3" src="" alt="">
+                    </div>
+                    <h2 id="score3">?</h2>
+                    <div class="specialty-name" id="name3">-</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tabs -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                    <li class="nav-item">
+                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-ranking">
+                            <i class="fas fa-list-ol me-1"></i>דירוג מלא
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-charts">
+                            <i class="fas fa-chart-pie me-1"></i>השוואה חזותית
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-details">
+                            <i class="fas fa-info-circle me-1"></i>פרטי התמחות
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-about">
+                            <i class="fas fa-clipboard me-1"></i>אודות השאלון
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-algorithm">
+                            <i class="fas fa-calculator me-1"></i>אודות המחשבון
+                        </button>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body p-4">
+                <div class="tab-content">
+                    <!-- Tab: Ranking -->
+                    <div class="tab-pane fade show active" id="tab-ranking">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 60px;">דירוג</th>
+                                        <th>התמחות</th>
+                                        <th>ציון התאמה</th>
+                                        <th>שביעות רצון</th>
+                                        <th>אחוז ממליצים</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ranking-body"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- Tab: Charts -->
+                    <div class="tab-pane fade" id="tab-charts">
+                        <div class="row">
+                            <div class="col-lg-6 mb-4">
+                                <div id="radar-chart" style="height: 420px;"></div>
+                            </div>
+                            <div class="col-lg-6 mb-4">
+                                <div id="bar-chart" style="height: 420px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tab: Details -->
+                    <div class="tab-pane fade" id="tab-details">
+                        <div class="row mb-4">
+                            <div class="col-md-4">
+                                <label class="form-label fw-semibold">בחר התמחות לפרטים:</label>
+                                <select id="detail-specialty" class="form-select" onchange="showSpecialtyDetails()">
+                                    <option value="כירורגית">כירורגית</option>
+                                    <option value="פנימית">פנימית</option>
+                                    <option value="משפחה">משפחה</option>
+                                    <option value="ילדים">ילדים</option>
+                                    <option value="פסיכיאטריה">פסיכיאטריה</option>
+                                    <option value="הרדמה">הרדמה</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row g-4 mb-4">
+                            <div class="col-lg-7">
+                                <div class="specialty-card" id="specialty-info"></div>
+                            </div>
+                            <div class="col-lg-5 text-center d-flex align-items-center justify-content-center">
+                                <img id="detail-img" class="specialty-img-large" src="" alt="">
+                            </div>
+                        </div>
+                        <h5 class="text-primary mb-3"><i class="fas fa-chart-bar me-2"></i>השוואה: פרופיל ההתמחות מול ההעדפות שלך</h5>
+                        <div id="compare-chart" style="height: 380px;"></div>
+                    </div>
+                    
+                    <!-- Tab: About Survey -->
+                    <div class="tab-pane fade" id="tab-about">
+                        <h4 class="text-primary mb-3"><i class="fas fa-poll me-2"></i>אודות הסקר</h4>
+                        <p class="lead">שאלון זה מבוסס על סקר מקיף שנערך בקרב מתמחים ברפואה בישראל. מטרת הסקר הייתה לבחון את הגורמים המשפיעים על בחירת התמחות, שביעות רצון מתהליך ההתמחות, ואיזון חיים-עבודה.</p>
+                        
+                        <hr class="my-4">
+                        
+                        <h5 class="text-primary mb-3"><i class="fas fa-chart-line me-2"></i>נתונים כלליים</h5>
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-4">
+                                <div class="stat-card">
+                                    <h2>367</h2>
+                                    <p>משתתפים</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="stat-card">
+                                    <h2>72%</h2>
+                                    <p>שיעור היענות</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="stat-card">
+                                    <h2>74%</h2>
+                                    <p>ממליצים על ההתמחות</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h5 class="text-primary mb-3"><i class="fas fa-users me-2"></i>סטטיסטיקה תיאורית</h5>
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="specialty-card">
+                                    <h6 class="fw-bold"><i class="fas fa-venus-mars me-2"></i>דמוגרפיה</h6>
+                                    <ul class="mb-0">
+                                        <li>נשים: 58%, גברים: 42%</li>
+                                        <li>גיל ממוצע: 32.4 (טווח: 25-55)</li>
+                                        <li>הורים במהלך ההתמחות: 38%</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="specialty-card">
+                                    <h6 class="fw-bold"><i class="fas fa-hospital me-2"></i>התפלגות התמחויות</h6>
+                                    <ul class="mb-0">
+                                        <li>כירורגיות: 28%</li>
+                                        <li>לא-כירורגיות: 69%</li>
+                                        <li>אחר: 3%</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div id="gender-pie" style="height: 280px;"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div id="specialty-pie" style="height: 280px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tab: Algorithm -->
+                    <div class="tab-pane fade" id="tab-algorithm">
+                        <h4 class="text-primary mb-3"><i class="fas fa-cog me-2"></i>איך מחושב ציון ההתאמה?</h4>
+                        <p class="lead">המחשבון משתמש באלגוריתם המשקלל את ההעדפות שלך מול נתוני הסקר האמיתיים של מתמחים בכל התמחות.</p>
+                        
+                        <hr class="my-4">
+                        
+                        <h5 class="text-primary mb-3"><i class="fas fa-balance-scale-right me-2"></i>שלב 1: משקלות לפי העדפות</h5>
+                        <p>כל קריטריון מקבל משקל יחסי לפי החשיבות שנתת לו (1-5):</p>
+                        <ul>
+                            <li>אם נתת <strong>5</strong> לאיזון ו-<strong>1</strong> לשכר → איזון ישפיע פי 5 יותר על הציון</li>
+                            <li>המשקלות מנורמלים כך שסכומם יהיה 100%</li>
+                        </ul>
+                        <div class="alert alert-info d-flex align-items-center">
+                            <i class="fas fa-code me-3 fs-4"></i>
+                            <code class="fs-6">משקל = (ציון שנתת / 5) / סכום כל הציונים</code>
+                        </div>
+                        
+                        <hr class="my-4">
+                        
+                        <h5 class="text-primary mb-3"><i class="fas fa-calculator me-2"></i>שלב 2: חישוב התאמה לכל קריטריון</h5>
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-6">
+                                <div class="algo-card direct">
+                                    <h6 class="fw-bold text-success"><i class="fas fa-arrow-up me-2"></i>קריטריונים ישירים</h6>
+                                    <small class="text-muted">ככל שההתמחות גבוהה יותר - יותר טוב</small>
+                                    <ul class="mt-2 mb-2">
+                                        <li>איזון בית-עבודה</li>
+                                        <li>שכר</li>
+                                        <li>מחקר/אקדמיה</li>
+                                        <li>תחושת משמעות</li>
+                                    </ul>
+                                    <code>התאמה = ציון ההתמחות / 5</code>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="algo-card proximity">
+                                    <h6 class="fw-bold text-warning"><i class="fas fa-bullseye me-2"></i>קריטריונים של קרבה</h6>
+                                    <small class="text-muted">ככל שההתמחות קרובה להעדפה - יותר טוב</small>
+                                    <ul class="mt-2 mb-2">
+                                        <li>עבודה ידנית</li>
+                                        <li>קשר עם מטופלים</li>
+                                        <li>מוכנות לתורנויות</li>
+                                    </ul>
+                                    <code>התאמה = 1 - |העדפה - ציון| / 4</code>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <hr class="my-4">
+                        
+                        <h5 class="text-primary mb-3"><i class="fas fa-trophy me-2"></i>שלב 3: ציון סופי</h5>
+                        <div class="alert alert-secondary d-flex align-items-center">
+                            <i class="fas fa-sigma me-3 fs-4"></i>
+                            <code class="fs-5">ציון = Σ (משקל × התאמה × 100)</code>
+                        </div>
+                        
+                        <div class="alert alert-warning mt-4">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            <strong>הערה:</strong> המחשבון נועד לסייע בהתמצאות ראשונית בלבד. מומלץ לשוחח עם מתמחים ובוגרים בתחומים שמעניינים אותך.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <footer class="text-center text-muted py-4">
+            <small>מחקר בחירת התמחות ברפואה © 2024 | מבוסס על נתוני סקר אמיתיים</small>
+        </footer>
+        
+    </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+    // ==========================================
+    // DATA - Specialty Profiles (IDENTICAL TO SHINY APP)
+    // ==========================================
+    
+    const specialtyProfiles = [
+        {
+            name: "כירורגית",
+            image: "prop_img_for_app/כירורגית.jpg",
+            avg_balance: 2.3, avg_stress: 2.0, avg_shifts: 6.5, avg_research: 3.2,
+            avg_meaning: 4.0, avg_teamwork: 4.2, avg_manual: 4.8, avg_patient_contact: 3.5,
+            avg_salary: 3.8, avg_satisfaction: 3.6, avg_bureaucracy: 2.8,
+            pct_recommend: 72, pct_parenting: 25,
+            fellowship_importance: 4.0, community_work: 1.5, private_work: 3.5,
+            description: "התמחויות כירורגיות כוללות עבודה ידנית אינטנסיבית, תורנויות רבות, ולחץ גבוה. מתאים למי שאוהב פעולה, תוצאות מיידיות ועבודת צוות."
+        },
+        {
+            name: "פנימית",
+            image: "prop_img_for_app/פנימית.png",
+            avg_balance: 2.6, avg_stress: 2.4, avg_shifts: 5.0, avg_research: 3.5,
+            avg_meaning: 3.8, avg_teamwork: 3.8, avg_manual: 2.2, avg_patient_contact: 4.0,
+            avg_salary: 3.2, avg_satisfaction: 3.4, avg_bureaucracy: 3.8,
+            pct_recommend: 65, pct_parenting: 35,
+            fellowship_importance: 3.5, community_work: 2.5, private_work: 3.0,
+            description: "רפואה פנימית מאופיינת בחשיבה אנליטית, קשר מתמשך עם מטופלים, ועומס בירוקרטי. מתאים למי שאוהב לפתור חידות רפואיות."
+        },
+        {
+            name: "משפחה",
+            image: "prop_img_for_app/משפחה.png",
+            avg_balance: 4.1, avg_stress: 3.9, avg_shifts: 2.0, avg_research: 2.0,
+            avg_meaning: 3.9, avg_teamwork: 3.2, avg_manual: 1.8, avg_patient_contact: 4.5,
+            avg_salary: 3.5, avg_satisfaction: 4.0, avg_bureaucracy: 2.5,
+            pct_recommend: 82, pct_parenting: 55,
+            fellowship_importance: 1.5, community_work: 4.5, private_work: 4.0,
+            description: "רפואת משפחה מציעה איזון בית-עבודה מצוין, קשר ארוך טווח עם מטופלים, ואפשרויות עבודה בקהילה. מתאים למי שמעדיף יציבות."
+        },
+        {
+            name: "ילדים",
+            image: "prop_img_for_app/ילדים.png",
+            avg_balance: 3.4, avg_stress: 3.3, avg_shifts: 4.0, avg_research: 2.8,
+            avg_meaning: 4.1, avg_teamwork: 3.9, avg_manual: 2.5, avg_patient_contact: 4.2,
+            avg_salary: 3.0, avg_satisfaction: 3.8, avg_bureaucracy: 3.2,
+            pct_recommend: 78, pct_parenting: 45,
+            fellowship_importance: 2.5, community_work: 3.0, private_work: 3.2,
+            description: "רפואת ילדים מאופיינת בעבודה עם אוכלוסייה ייחודית, תחושת משמעות גבוהה, ואיזון סביר. מתאים למי שאוהב לעבוד עם ילדים ומשפחות."
+        },
+        {
+            name: "פסיכיאטריה",
+            image: "prop_img_for_app/פסיכיאטריה.png",
+            avg_balance: 3.8, avg_stress: 3.5, avg_shifts: 3.0, avg_research: 2.5,
+            avg_meaning: 4.0, avg_teamwork: 3.5, avg_manual: 1.5, avg_patient_contact: 4.8,
+            avg_salary: 3.3, avg_satisfaction: 3.7, avg_bureaucracy: 2.2,
+            pct_recommend: 75, pct_parenting: 42,
+            fellowship_importance: 2.0, community_work: 3.5, private_work: 4.2,
+            description: "פסיכיאטריה מציעה קשר עמוק עם מטופלים, עבודה ללא לחץ פיזי, ואפשרויות לעבודה פרטית. מתאים למי שמעוניין בצד הנפשי של הרפואה."
+        },
+        {
+            name: "הרדמה",
+            image: "prop_img_for_app/הרדמה.png",
+            avg_balance: 3.2, avg_stress: 2.8, avg_shifts: 5.5, avg_research: 2.2,
+            avg_meaning: 3.5, avg_teamwork: 4.5, avg_manual: 3.8, avg_patient_contact: 2.0,
+            avg_salary: 4.2, avg_satisfaction: 3.5, avg_bureaucracy: 2.0,
+            pct_recommend: 70, pct_parenting: 38,
+            fellowship_importance: 2.8, community_work: 1.8, private_work: 2.5,
+            description: "הרדמה מאופיינת בעבודת צוות אינטנסיבית, שכר גבוה יחסית, ופחות קשר ישיר עם מטופלים. מתאים למי שאוהב טכניות ופעולה."
+        }
+    ];
+    
+    let results = [];
+    
+    // ==========================================
+    // SLIDER UPDATE
+    // ==========================================
+    
+    function updateSlider(name) {
+        const slider = document.getElementById('pref_' + name);
+        const valSpan = document.getElementById('val_' + name);
+        valSpan.textContent = slider.value;
+    }
+    
+    // ==========================================
+    // CALCULATE MATCH SCORE (IDENTICAL TO SHINY APP)
+    // ==========================================
+    
+    function calculateMatchScore(userPrefs, specialty) {
+        // Step 1: Calculate weights (identical to R: user_prefs$pref_X / 5)
+        const weights = {
+            balance: userPrefs.balance / 5,
+            salary: userPrefs.salary / 5,
+            research: userPrefs.research / 5,
+            meaning: userPrefs.meaning / 5,
+            stress: userPrefs.stress / 5,
+            manual: userPrefs.manual / 5,
+            patient_contact: userPrefs.patient / 5,
+            shifts: userPrefs.shifts / 5
+        };
+        
+        // Normalize weights (identical to R: w / total_weight)
+        const totalWeight = Object.values(weights).reduce((a, b) => a + b, 0);
+        Object.keys(weights).forEach(k => weights[k] /= totalWeight);
+        
+        let score = 0;
+        
+        // Direct criteria (identical to R)
+        // איזון - התאמה ישירה
+        score += weights.balance * (specialty.avg_balance / 5) * 100;
+        
+        // שכר - התאמה ישירה
+        score += weights.salary * (specialty.avg_salary / 5) * 100;
+        
+        // מחקר - התאמה ישירה
+        score += weights.research * (specialty.avg_research / 5) * 100;
+        
+        // משמעות - התאמה ישירה
+        score += weights.meaning * (specialty.avg_meaning / 5) * 100;
+        
+        // סטרס - התאמה הפוכה (identical to R logic)
+        let stressMatch;
+        if (userPrefs.stress >= 3) {
+            stressMatch = (6 - specialty.avg_stress) / 5;
+        } else {
+            stressMatch = specialty.avg_stress / 5;
+        }
+        score += weights.stress * stressMatch * 100;
+        
+        // עבודה ידנית - קרבה (identical to R: 1 - abs(...) / 4)
+        const manualMatch = 1 - Math.abs(userPrefs.manual - specialty.avg_manual) / 4;
+        score += weights.manual * manualMatch * 100;
+        
+        // קשר עם מטופלים - קרבה (identical to R)
+        const contactMatch = 1 - Math.abs(userPrefs.patient - specialty.avg_patient_contact) / 4;
+        score += weights.patient_contact * contactMatch * 100;
+        
+        // תורנויות - התאמה לפי העדפה (identical to R normalization)
+        const shiftsNormalized = (specialty.avg_shifts - 2) / 6.5;  // נורמליזציה ל-0-1
+        const shiftsPrefNormalized = (userPrefs.shifts - 1) / 4;
+        const shiftsMatch = 1 - Math.abs(shiftsPrefNormalized - shiftsNormalized);
+        score += weights.shifts * shiftsMatch * 100;
+        
+        // בונוס להורות (identical to R)
+        if (userPrefs.parenting === 'yes') {
+            score *= (1 + (specialty.pct_parenting / 100 - 0.35) * 0.2);
+        }
+        
+        return Math.round(score * 10) / 10;
+    }
+    
+    // ==========================================
+    // MAIN CALCULATE FUNCTION
+    // ==========================================
+    
+    function calculate() {
+        const userPrefs = {
+            balance: parseInt(document.getElementById('pref_balance').value),
+            salary: parseInt(document.getElementById('pref_salary').value),
+            research: parseInt(document.getElementById('pref_research').value),
+            meaning: parseInt(document.getElementById('pref_meaning').value),
+            stress: parseInt(document.getElementById('pref_stress').value),
+            manual: parseInt(document.getElementById('pref_manual').value),
+            patient: parseInt(document.getElementById('pref_patient').value),
+            shifts: parseInt(document.getElementById('pref_shifts').value),
+            parenting: document.querySelector('input[name="parenting"]:checked').value
+        };
+        
+        // Calculate scores
+        results = specialtyProfiles.map(spec => ({
+            ...spec,
+            score: calculateMatchScore(userPrefs, spec)
+        })).sort((a, b) => b.score - a.score);
+        
+        // Animate result cards
+        const cards = document.querySelectorAll('.result-card');
+        cards.forEach((card, i) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                card.style.transition = 'all 0.5s ease';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, i * 150);
+        });
+        
+        // Update top 3 cards
+        for (let i = 0; i < 3; i++) {
+            document.getElementById(`score${i+1}`).textContent = results[i].score + '%';
+            document.getElementById(`name${i+1}`).textContent = results[i].name;
+            const img = document.getElementById(`img${i+1}`);
+            const frame = document.getElementById(`frame${i+1}`);
+            img.src = results[i].image;
+            img.onload = () => {
+                img.style.display = 'block';
+                frame.style.display = 'inline-block';
+            };
+            img.onerror = () => {
+                img.style.display = 'none';
+                frame.style.display = 'none';
+            };
+        }
+        
+        // Update ranking table
+        updateRankingTable();
+        
+        // Update charts
+        updateCharts();
+        
+        // Update specialty details
+        showSpecialtyDetails();
+    }
+    
+    // ==========================================
+    // UPDATE RANKING TABLE
+    // ==========================================
+    
+    function updateRankingTable() {
+        const tbody = document.getElementById('ranking-body');
+        tbody.innerHTML = results.map((r, i) => {
+            const rankClass = i === 0 ? 'rank-1' : i === 1 ? 'rank-2' : i === 2 ? 'rank-3' : 'rank-other';
+            return `
+                <tr>
+                    <td><span class="rank-badge ${rankClass}">${i + 1}</span></td>
+                    <td><strong>${r.name}</strong></td>
+                    <td><span class="badge bg-primary fs-6">${r.score}%</span></td>
+                    <td>${r.avg_satisfaction}/5 ⭐</td>
+                    <td>${r.pct_recommend}%</td>
+                </tr>
+            `;
+        }).join('');
+    }
+    
+    // ==========================================
+    // UPDATE CHARTS
+    // ==========================================
+    
+    function updateCharts() {
+        if (results.length === 0) return;
+        
+        const top3 = results.slice(0, 3);
+        const categories = ['איזון', 'שכר', 'מחקר', 'משמעות', 'רוגע', 'קשר מטופלים'];
+        
+        // Radar Chart
+        const radarData = top3.map((spec, i) => ({
+            type: 'scatterpolar',
+            r: [spec.avg_balance, spec.avg_salary, spec.avg_research, spec.avg_meaning, spec.avg_stress, spec.avg_patient_contact],
+            theta: categories,
+            fill: 'toself',
+            name: `${spec.name} (${spec.score}%)`,
+            fillcolor: ['rgba(255,215,0,0.3)', 'rgba(192,192,192,0.3)', 'rgba(205,127,50,0.3)'][i],
+            line: { color: ['#ffd700', '#c0c0c0', '#cd7f32'][i], width: 3 }
+        }));
+        
+        Plotly.newPlot('radar-chart', radarData, {
+            polar: { 
+                radialaxis: { visible: true, range: [0, 5], tickfont: { size: 10 } },
+                angularaxis: { tickfont: { size: 12 } }
+            },
+            showlegend: true,
+            legend: { x: 0.5, y: -0.15, orientation: 'h', xanchor: 'center' },
+            title: { text: 'השוואת פרופילים - 3 התמחויות מובילות', font: { size: 16 } },
+            margin: { t: 60, b: 80 }
+        }, { responsive: true });
+        
+        // Bar Chart
+        const colors = results.map((r, i) => {
+            if (i === 0) return '#ffd700';
+            if (i === 1) return '#c0c0c0';
+            if (i === 2) return '#cd7f32';
+            return '#3498db';
+        });
+        
+        Plotly.newPlot('bar-chart', [{
+            x: results.map(r => r.name),
+            y: results.map(r => r.score),
+            type: 'bar',
+            marker: { 
+                color: colors,
+                line: { color: colors.map(c => c === '#3498db' ? '#2874a6' : c), width: 2 }
+            },
+            text: results.map(r => r.score + '%'),
+            textposition: 'outside',
+            textfont: { size: 14, weight: 'bold' }
+        }], {
+            xaxis: { title: { text: 'התמחות', font: { size: 14 } }, tickfont: { size: 12 } },
+            yaxis: { title: { text: 'ציון התאמה (%)', font: { size: 14 } }, range: [0, 105], tickfont: { size: 12 } },
+            title: { text: 'דירוג כל ההתמחויות', font: { size: 16 } },
+            margin: { t: 60, b: 80 }
+        }, { responsive: true });
+    }
+    
+    // ==========================================
+    // SPECIALTY DETAILS
+    // ==========================================
+    
+    function showSpecialtyDetails() {
+        const specName = document.getElementById('detail-specialty').value;
+        const spec = specialtyProfiles.find(s => s.name === specName);
+        if (!spec) return;
+        
+        // Find rank
+        const rank = results.findIndex(r => r.name === specName) + 1;
+        const rankText = rank > 0 ? `מקום ${rank} בדירוג שלך` : '';
+        
+        // Update info card
+        document.getElementById('specialty-info').innerHTML = `
+            <h3><i class="fas fa-hospital-user me-2"></i>${spec.name}</h3>
+            ${rankText ? `<span class="badge bg-primary mb-3">${rankText}</span>` : ''}
+            <p class="lead">${spec.description}</p>
+            <hr>
+            <div class="row">
+                <div class="col-md-4">
+                    <h5><i class="fas fa-chart-bar"></i> נתונים כלליים</h5>
+                    <p><i class="fas fa-star text-warning me-2"></i><strong>שביעות רצון:</strong> ${spec.avg_satisfaction}/5</p>
+                    <p><i class="fas fa-thumbs-up text-success me-2"></i><strong>אחוז ממליצים:</strong> ${spec.pct_recommend}%</p>
+                    <p><i class="fas fa-baby text-info me-2"></i><strong>אחוז הורים:</strong> ${spec.pct_parenting}%</p>
+                </div>
+                <div class="col-md-4">
+                    <h5><i class="fas fa-weight-hanging"></i> עומסים</h5>
+                    <p><i class="fas fa-moon text-secondary me-2"></i><strong>תורנויות/חודש:</strong> ${spec.avg_shifts}</p>
+                    <p><i class="fas fa-bolt text-danger me-2"></i><strong>רמת סטרס:</strong> ${spec.avg_stress}/5</p>
+                    <p><i class="fas fa-file-alt text-muted me-2"></i><strong>עומס בירוקרטי:</strong> ${spec.avg_bureaucracy}/5</p>
+                </div>
+                <div class="col-md-4">
+                    <h5><i class="fas fa-door-open"></i> הזדמנויות</h5>
+                    <p><i class="fas fa-microscope text-primary me-2"></i><strong>אפשרות למחקר:</strong> ${spec.avg_research}/5</p>
+                    <p><i class="fas fa-briefcase-medical text-success me-2"></i><strong>עבודה פרטית:</strong> ${spec.private_work}/5</p>
+                    <p><i class="fas fa-users text-info me-2"></i><strong>עבודה בקהילה:</strong> ${spec.community_work}/5</p>
+                </div>
+            </div>
+        `;
+        
+        // Update image
+        const img = document.getElementById('detail-img');
+        img.src = spec.image;
+        img.onerror = () => img.style.display = 'none';
+        img.onload = () => img.style.display = 'block';
+        
+        // Update comparison chart
+        const userPrefs = {
+            balance: parseInt(document.getElementById('pref_balance').value),
+            salary: parseInt(document.getElementById('pref_salary').value),
+            research: parseInt(document.getElementById('pref_research').value),
+            meaning: parseInt(document.getElementById('pref_meaning').value),
+            stress: parseInt(document.getElementById('pref_stress').value),
+            manual: parseInt(document.getElementById('pref_manual').value),
+            patient: parseInt(document.getElementById('pref_patient').value)
+        };
+        
+        const metrics = ['איזון', 'שכר', 'מחקר', 'משמעות', 'רוגע', 'עבודה ידנית', 'קשר מטופלים'];
+        const specValues = [spec.avg_balance, spec.avg_salary, spec.avg_research, spec.avg_meaning, spec.avg_stress, spec.avg_manual, spec.avg_patient_contact];
+        const userValues = [userPrefs.balance, userPrefs.salary, userPrefs.research, userPrefs.meaning, userPrefs.stress, userPrefs.manual, userPrefs.patient];
+        
+        Plotly.newPlot('compare-chart', [
+            { 
+                x: metrics, y: specValues, type: 'bar', name: 'פרופיל ההתמחות', 
+                marker: { color: '#3498db', line: { color: '#2874a6', width: 2 } }
+            },
+            { 
+                x: metrics, y: userValues, type: 'bar', name: 'ההעדפות שלך', 
+                marker: { color: '#e74c3c', line: { color: '#c0392b', width: 2 } }
+            }
+        ], {
+            barmode: 'group',
+            xaxis: { tickfont: { size: 12 } },
+            yaxis: { title: 'ציון (1-5)', range: [0, 5.5], tickfont: { size: 12 } },
+            legend: { orientation: 'h', y: -0.2, xanchor: 'center', x: 0.5 },
+            title: { text: `השוואה: ${spec.name}`, font: { size: 16 } },
+            margin: { t: 50, b: 100 }
+        }, { responsive: true });
+    }
+    
+    // ==========================================
+    // ABOUT CHARTS (Static)
+    // ==========================================
+    
+    function initAboutCharts() {
+        // Gender pie
+        Plotly.newPlot('gender-pie', [{
+            labels: ['נשים', 'גברים'],
+            values: [58, 42],
+            type: 'pie',
+            marker: { colors: ['#e74c3c', '#3498db'], line: { color: '#fff', width: 2 } },
+            textinfo: 'label+percent',
+            textfont: { size: 14 },
+            hole: 0.4
+        }], { 
+            title: { text: 'התפלגות מגדרית', font: { size: 16 } }, 
+            showlegend: false,
+            margin: { t: 50, b: 20 }
+        }, { responsive: true });
+        
+        // Specialty pie
+        Plotly.newPlot('specialty-pie', [{
+            labels: ['כירורגית', 'לא-כירורגית', 'אחר'],
+            values: [28, 69, 3],
+            type: 'pie',
+            marker: { colors: ['#27ae60', '#3498db', '#95a5a6'], line: { color: '#fff', width: 2 } },
+            textinfo: 'label+percent',
+            textfont: { size: 14 },
+            hole: 0.4
+        }], { 
+            title: { text: 'התפלגות קטגוריות', font: { size: 16 } }, 
+            showlegend: false,
+            margin: { t: 50, b: 20 }
+        }, { responsive: true });
+    }
+    
+    // ==========================================
+    // INIT
+    // ==========================================
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        initAboutCharts();
+        showSpecialtyDetails();
+        
+        // Trigger initial calculation
+        setTimeout(calculate, 500);
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,309 @@
+==========================================
+סיכום סטטיסטי מלא
+==========================================
+
+--- מבחני ANOVA ---
+             Df Sum Sq Mean Sq F value Pr(>F)
+Age_Group     2    1.9  0.9478   0.735   0.48
+Residuals   364  469.7  1.2904               
+                 Df Sum Sq Mean Sq F value Pr(>F)    
+Specialty_Group   7 1253.8  179.12   65.58 <2e-16 ***
+Residuals       351  958.6    2.73                   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+                 Df Sum Sq Mean Sq F value   Pr(>F)    
+Specialty_Group   7   31.8   4.547   4.719 4.39e-05 ***
+Residuals       359  345.9   0.964                     
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+              Df Sum Sq Mean Sq F value Pr(>F)
+Salary_Group   4   1.77  0.4437   0.734  0.569
+Residuals    348 210.24  0.6041               
+
+--- מבחני t-test ---
+
+	Welch Two Sample t-test
+
+data:  Score_Satisfaction by Selected_Mentoring
+t = 1.2059, df = 287.87, p-value = 0.2288
+alternative hypothesis: true difference in means between group כן and group לא is not equal to 0
+95 percent confidence interval:
+ -0.05992184  0.24950086
+sample estimates:
+mean in group כן mean in group לא 
+        4.313043         4.218254 
+
+
+	Welch Two Sample t-test
+
+data:  Score_Satisfaction by Selected_Research
+t = 1.235, df = 40.216, p-value = 0.224
+alternative hypothesis: true difference in means between group כן and group לא is not equal to 0
+95 percent confidence interval:
+ -0.1020480  0.4228609
+sample estimates:
+mean in group כן mean in group לא 
+        4.393939         4.233533 
+
+
+	Welch Two Sample t-test
+
+data:  Score_Bureaucracy by Regret_Binary
+t = -2.8362, df = 55.623, p-value = 0.006357
+alternative hypothesis: true difference in means between group לא מתחרט/ת and group מתחרט/ת is not equal to 0
+95 percent confidence interval:
+ -0.7761301 -0.1335237
+sample estimates:
+mean in group לא מתחרט/ת    mean in group מתחרט/ת 
+                3.272446                 3.727273 
+
+
+	Welch Two Sample t-test
+
+data:  Score_Manual by Is_Surgical
+t = -16.357, df = 294.52, p-value < 2.2e-16
+alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0
+95 percent confidence interval:
+ -1.949477 -1.530741
+sample estimates:
+mean in group 0 mean in group 1 
+       2.754941        4.495050 
+
+
+	Welch Two Sample t-test
+
+data:  Score_Stress by Is_Surgical
+t = 5.4792, df = 180.51, p-value = 1.42e-07
+alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0
+95 percent confidence interval:
+ 0.4097729 0.8710161
+sample estimates:
+mean in group 0 mean in group 1 
+       2.600791        1.960396 
+
+
+	Welch Two Sample t-test
+
+data:  Score_Balance by Has_Children
+t = 1.0778, df = 82.693, p-value = 0.2842
+alternative hypothesis: true difference in means between group כן and group לא is not equal to 0
+95 percent confidence interval:
+ -0.1510914  0.5085116
+sample estimates:
+mean in group כן mean in group לא 
+        3.506579         3.327869 
+
+
+	Welch Two Sample t-test
+
+data:  Score_Bureaucracy by Is_Internal
+t = -1.7971, df = 75.111, p-value = 0.07634
+alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0
+95 percent confidence interval:
+ -0.51952771  0.02673162
+sample estimates:
+mean in group 0 mean in group 1 
+       3.292063        3.538462 
+
+
+	Welch Two Sample t-test
+
+data:  Score_Meaning by Is_Internal
+t = 0.55702, df = 70.961, p-value = 0.5793
+alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0
+95 percent confidence interval:
+ -0.1620582  0.2876992
+sample estimates:
+mean in group 0 mean in group 1 
+       4.466667        4.403846 
+
+
+	Welch Two Sample t-test
+
+data:  Score_Balance by Is_Family
+t = -9.716, df = 216.65, p-value < 2.2e-16
+alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0
+95 percent confidence interval:
+ -1.2194829 -0.8081592
+sample estimates:
+mean in group 0 mean in group 1 
+       3.241993        4.255814 
+
+
+	Welch Two Sample t-test
+
+data:  Score_Research by Is_Family
+t = 4.9107, df = 139.28, p-value = 2.505e-06
+alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0
+95 percent confidence interval:
+ 0.3853108 0.9046834
+sample estimates:
+mean in group 0 mean in group 1 
+       3.982206        3.337209 
+
+
+	Welch Two Sample t-test
+
+data:  Score_Fellowship by Is_Surgical
+t = -8.6853, df = 228.57, p-value = 7.304e-16
+alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0
+95 percent confidence interval:
+ -1.2699319 -0.8002751
+sample estimates:
+mean in group 0 mean in group 1 
+       2.727273        3.762376 
+
+
+	Welch Two Sample t-test
+
+data:  Score_Community_Work by Is_Surgical
+t = -1.998, df = 227.43, p-value = 0.04691
+alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0
+95 percent confidence interval:
+ -0.523739004 -0.003635472
+sample estimates:
+mean in group 0 mean in group 1 
+       4.162055        4.425743 
+
+
+	Welch Two Sample t-test
+
+data:  Score_Private_Work by Is_Surgical
+t = -9.9673, df = 277.31, p-value < 2.2e-16
+alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0
+95 percent confidence interval:
+ -1.567347 -1.050349
+sample estimates:
+mean in group 0 mean in group 1 
+       2.968379        4.277228 
+
+
+	Welch Two Sample t-test
+
+data:  Score_Satisfaction by Was_Switcher
+t = 0.12994, df = 39.772, p-value = 0.8973
+alternative hypothesis: true difference in means between group החליף התמחות and group לא החליף is not equal to 0
+95 percent confidence interval:
+ -0.2687202  0.3056395
+sample estimates:
+mean in group החליף התמחות     mean in group לא החליף 
+                  4.264706                   4.246246 
+
+
+	Welch Two Sample t-test
+
+data:  Score_Bureaucracy by Was_Switcher
+t = -1.7548, df = 37.144, p-value = 0.08753
+alternative hypothesis: true difference in means between group החליף התמחות and group לא החליף is not equal to 0
+95 percent confidence interval:
+ -0.84622368  0.06067342
+sample estimates:
+mean in group החליף התמחות     mean in group לא החליף 
+                  2.970588                   3.363363 
+
+
+	Welch Two Sample t-test
+
+data:  Score_Meaning by Was_Switcher
+t = -0.2993, df = 37.393, p-value = 0.7664
+alternative hypothesis: true difference in means between group החליף התמחות and group לא החליף is not equal to 0
+95 percent confidence interval:
+ -0.3937834  0.2923879
+sample estimates:
+mean in group החליף התמחות     mean in group לא החליף 
+                  4.411765                   4.462462 
+
+
+	Welch Two Sample t-test
+
+data:  Score_Teamwork by Is_Surgical
+t = -2.1634, df = 185.35, p-value = 0.03179
+alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0
+95 percent confidence interval:
+ -0.54334993 -0.02503735
+sample estimates:
+mean in group 0 mean in group 1 
+       3.517787        3.801980 
+
+
+--- רגרסיה לוגיסטית ---
+
+Call:
+glm(formula = Recommend_Binary ~ Score_Satisfaction + Score_Balance + 
+    Score_Bureaucracy + Shifts_Numeric, family = "binomial", 
+    data = df_logit)
+
+Coefficients:
+                   Estimate Std. Error z value Pr(>|z|)    
+(Intercept)        -4.88295    1.52931  -3.193  0.00141 ** 
+Score_Satisfaction  1.79301    0.28384   6.317 2.67e-10 ***
+Score_Balance       0.43173    0.19905   2.169  0.03009 *  
+Score_Bureaucracy  -0.31726    0.20500  -1.548  0.12171    
+Shifts_Numeric     -0.08624    0.09783  -0.882  0.37803    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 286.15  on 358  degrees of freedom
+Residual deviance: 189.96  on 354  degrees of freedom
+AIC: 199.96
+
+Number of Fisher Scoring iterations: 6
+
+
+--- בדיקות VIF (רגרסיה) ---
+Score_Satisfaction      Score_Balance  Score_Bureaucracy     Shifts_Numeric 
+          1.031531           1.238571           1.028209           1.219683 
+
+פרשנות: VIF > 5 מצביע על בעיית קולינאריות
+
+--- בדיקות נורמליות (Shapiro-Wilk) ---
+
+Score_Satisfaction:
+  W = 0.786, p = p<0.001
+  לא נורמלי (p<0.05)
+
+Score_Balance:
+  W = 0.9006, p = p<0.001
+  לא נורמלי (p<0.05)
+
+Shifts_Numeric:
+  W = 0.8823, p = p<0.001
+  לא נורמלי (p<0.05)
+
+--- בדיקות שוויון שונויות (Levene) ---
+
+shifts_by_specialty:
+Levene's Test for Homogeneity of Variance (center = median)
+       Df F value    Pr(>F)    
+group   7  5.1482 1.361e-05 ***
+      351                      
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+  שונויות לא שוות (p<0.05) - שקול מבחן לא-פרמטרי
+
+colleagues_by_specialty:
+Levene's Test for Homogeneity of Variance (center = median)
+       Df F value Pr(>F)
+group   7  1.1615 0.3243
+      359               
+  שונויות שוות (p>=0.05)
+
+--- טבלת תיקון BH (Benjamini-Hochberg) ---
+                      Test   P_Original P_Adjusted_BH Significant_Original Significant_BH
+                3.1_shifts 5.534580e-60  6.641496e-59                 TRUE           TRUE
+             3.1_shifts_kw 3.930429e-38  2.358257e-37                 TRUE           TRUE
+         3.2_colleagues_kw 3.274679e-05  1.309872e-04                 TRUE           TRUE
+            3.2_colleagues 4.386748e-05  1.316024e-04                 TRUE           TRUE
+                1.2_gender 1.817859e-03  4.362863e-03                 TRUE           TRUE
+ 3.3_bureaucracy_regret_mw 4.578771e-03  9.157542e-03                 TRUE           TRUE
+    3.3_bureaucracy_regret 6.356746e-03  1.089728e-02                 TRUE           TRUE
+    1.3_balance_parents_mw 2.702296e-01  3.789976e-01                FALSE          FALSE
+       1.3_balance_parents 2.842482e-01  3.789976e-01                FALSE          FALSE
+             3.4_salary_kw 4.027266e-01  4.832720e-01                FALSE          FALSE
+                3.4_salary 5.689948e-01  6.207216e-01                FALSE          FALSE
+                   1.1_age 8.702455e-01  8.702455e-01                FALSE          FALSE
+
+הערה: תיקון BH מפחית שגיאות False Discovery Rate
+מבחנים שנותרו מובהקים לאחר תיקון מסומנים ב-TRUE בעמודה Significant_BH

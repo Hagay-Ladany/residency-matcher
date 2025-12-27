@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מחקר בחירת התמחות ברפואה</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Heebo', 'Segoe UI', Tahoma, Arial, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #2874a6 0%, #153952 50%, #1a5276 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .hero {
+            padding: 60px 20px;
+            text-align: center;
+            color: white;
+        }
+        
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+        
+        .cards-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+        }
+        
+        .action-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .action-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+        }
+        
+        .card-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        
+        .action-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .action-card p {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 25px;
+            flex-grow: 1;
+        }
+        
+        .btn-action {
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            border-radius: 10px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-report {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+        }
+        
+        .btn-report:hover {
+            background: linear-gradient(135deg, #219a52, #27ae60);
+            color: white;
+            transform: scale(1.05);
+        }
+        
+        .btn-app {
+            background: linear-gradient(135deg, #2980b9, #3498db);
+            color: white;
+        }
+        
+        .btn-app:hover {
+            background: linear-gradient(135deg, #1a5276, #2980b9);
+            color: white;
+            transform: scale(1.05);
+        }
+        
+        .btn-survey {
+            background: linear-gradient(135deg, #8e44ad, #9b59b6);
+            color: white;
+        }
+        
+        .btn-survey:hover {
+            background: linear-gradient(135deg, #71368a, #8e44ad);
+            color: white;
+            transform: scale(1.05);
+        }
+        
+        .stats-bar {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            color: white;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-number.animate {
+            animation: pulse 0.5s ease;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .credit {
+            font-size: 0.75rem;
+            opacity: 0.7;
+            margin-top: 8px;
+        }
+        
+        footer {
+            background: rgba(0,0,0,0.2);
+            color: rgba(255,255,255,0.8);
+            text-align: center;
+            padding: 20px;
+            margin-top: auto;
+        }
+        
+        footer a {
+            color: rgba(255,255,255,0.9);
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .stat-number {
+                font-size: 1.8rem;
+            }
+            
+            .action-card {
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>🩺 מחקר בחירת התמחות ברפואה</h1>
+        <p>סקר מקיף בקרב מתמחים ברפואה בישראל - בחינת גורמים המשפיעים על בחירת התמחות, שביעות רצון ואיזון חיים-עבודה</p>
+        
+        <div class="stats-bar">
+            <div class="row">
+                <div class="col-4">
+                    <div class="stat-item">
+                        <div class="stat-number" id="stat-participants" data-target="367">0</div>
+                        <div class="stat-label">משתתפים</div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="stat-item">
+                        <div class="stat-number" id="stat-recommend" data-target="74" data-suffix="%">0</div>
+                        <div class="stat-label">ממליצים</div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="stat-item">
+                        <div class="stat-number" id="stat-categories" data-target="6">0</div>
+                        <div class="stat-label">קטגוריות</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cards-container">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="action-card">
+                    <div>
+                        <div class="card-icon">📊</div>
+                        <h3>דוח הניתוח</h3>
+                        <p>צפייה בתוצאות המלאות של הסקר - גרפים, טבלאות וניתוחים סטטיסטיים מעמיקים על בחירת התמחות</p>
+                    </div>
+                    <a href="reports/analysis_report.html" class="btn btn-action btn-report">
+                        📄 צפייה בדוח
+                    </a>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="action-card">
+                    <div>
+                        <div class="card-icon">🧮</div>
+                        <h3>מחשבון התאמה</h3>
+                        <p>כלי אינטראקטיבי לבחינת התאמה להתמחויות שונות על בסיס העדפותיך האישיות ונתוני הסקר</p>
+                    </div>
+                    <a href="calculator.html" class="btn btn-action btn-app">
+                        🚀 פתח מחשבון
+                    </a>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="action-card">
+                    <div>
+                        <div class="card-icon">📝</div>
+                        <h3>השתתפות בסקר</h3>
+                        <p>הסקר עדיין פעיל! אם את/ה מתמחה או בוגר/ת התמחות - נשמח לשמוע את דעתך</p>
+                    </div>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdELixxSRQ9DDlUN_z2V_171wEKZOzTmEewbps7wzJzwGRbrQ/viewform?usp=sf_link" target="_blank" class="btn btn-action btn-survey">
+                        ✏️ מלא שאלון
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>מחקר בחירת התמחות ברפואה © 2026</p>
+        <p>
+            <small>
+                נבנה באמצעות R ו-Bootstrap | מחשבון: HTML/JS טהור | 
+                <a href="reports/statistical_summary_ordered.txt">סיכום סטטיסטי</a>
+            </small>
+        </p>
+        <p class="credit">האנליזה חישובית ובניית פלטפורמה - חגי לדאני
+		<br>
+            איסוף ואירגון נתונים - ד"ר עידן וייס
+            <br>
+            ניהול הפרוייקט - ד"ר פנינה זמיר
+        </p>
+    </footer>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Counter Animation Function
+        function animateCounter(element, target, duration = 2000, suffix = '') {
+            const start = 0;
+            const increment = target / (duration / 16); // 60fps
+            let current = start;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.floor(current) + suffix;
+            }, 16);
+        }
+        
+        // Intersection Observer for triggering animation when stats come into view
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const element = entry.target;
+                    const target = parseInt(element.getAttribute('data-target'));
+                    const suffix = element.getAttribute('data-suffix') || '';
+                    
+                    // Add animation class
+                    element.classList.add('animate');
+                    
+                    // Start counter animation
+                    animateCounter(element, target, 2000, suffix);
+                    
+                    // Unobserve after animation starts
+                    observer.unobserve(element);
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all stat numbers when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            const statNumbers = document.querySelectorAll('.stat-number[data-target]');
+            statNumbers.forEach(stat => {
+                observer.observe(stat);
+            });
+        });
+    </script>
+</body>
+</html>
